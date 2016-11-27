@@ -44,6 +44,9 @@
     <Reference Include="AldenteaWpfUtility">
       <HintPath>..\external\AldenteaWpfUtility.dll</HintPath>
     </Reference>
+    <Reference Include="GrandMutusBase">
+      <HintPath>..\external\GrandMutusBase.dll</HintPath>
+    </Reference>
     <Reference Include="GrandMutusData, Version=0.8.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\external\GrandMutusData.dll</HintPath>

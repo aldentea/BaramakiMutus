@@ -48,6 +48,9 @@ namespace Aldentea.BaramakiMutus
 		public MainWindow()
 		{
 			InitializeComponent();
+
+			this.FileHistoryShortcutParent = menuItemHistory;
+
 		}
 
 
@@ -67,7 +70,7 @@ namespace Aldentea.BaramakiMutus
 				this.Height = MySettings.MainWindowRect.Height;
 			}
 			// 音量を復元。
-			//this.MyQuestionPlayer.Volume = MySettings.SongPlayerVolume;
+			this.MySongPlayer.Volume = MySettings.SongPlayerVolume;
 		}
 		#endregion
 
@@ -78,7 +81,7 @@ namespace Aldentea.BaramakiMutus
 			MySettings.MainWindowMaximized = this.WindowState == System.Windows.WindowState.Maximized;
 			MySettings.MainWindowRect = new Rect(this.Left, this.Top, this.Width, this.Height);
 			// 音量を保存。
-			//MySettings.SongPlayerVolume = this.MyQuestionPlayer.Volume;
+			MySettings.SongPlayerVolume = this.MySongPlayer.Volume;
 
 		}
 		#endregion
@@ -190,10 +193,22 @@ namespace Aldentea.BaramakiMutus
 
 		#region 曲再生関連
 
-		protected MediaPlayer _mPlayer = new MediaPlayer();     // とりあえずprotectedにしておく．
+		//protected MediaPlayer _mPlayer = new MediaPlayer();     // とりあえずprotectedにしておく．
 
-		bool songPlaying = false;
+		//bool songPlaying = false;
 
+		#region *MySongPlayerプロパティ
+		public GrandMutus.Base.SongPlayer MySongPlayer
+		{
+			get
+			{
+				return _songPlayer;
+			}
+		}
+		GrandMutus.Base.SongPlayer _songPlayer = new GrandMutus.Base.SongPlayer();
+		#endregion
+
+		/*
 		// 08/27/2013 by aldentea : IntroMutusからIntroRunperialにコピー．
 		// 08/13/2012 by aldentea
 		#region *Volumeプロパティ
@@ -204,19 +219,19 @@ namespace Aldentea.BaramakiMutus
 		{
 			get
 			{
-				return _mPlayer.Volume;
+				return MySongPlayer.Volume;
 			}
 			set
 			{
 				if (Volume != value)
 				{
-					_mPlayer.Volume = value;
+					MySongPlayer.Volume = value;
 					NotifyPropertyChanged("Volume");
 				}
 			}
 		}
 		#endregion
-
+	*/
 
 		#region TogglePlayPauseコマンドハンドラ
 
@@ -225,21 +240,15 @@ namespace Aldentea.BaramakiMutus
 
 		void SwitchPlayPause_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			if (songPlaying)
+			if (MySongPlayer.IsActive)
 			{
-				_mPlayer.Pause();
-				songPlaying = false;
-			}
-			else
-			{
-				_mPlayer.Play();
-				songPlaying = true;
+				MySongPlayer.TogglePlayPause();
 			}
 		}
 
 		void SwitchPlayPause_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = _mPlayer.Source != null;
+			e.CanExecute = MySongPlayer.IsActive;
 		}
 
 		#endregion

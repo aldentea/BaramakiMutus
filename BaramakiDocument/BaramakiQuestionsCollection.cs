@@ -60,7 +60,7 @@ namespace Aldentea.BaramakiMutus.Data
 				case NotifyCollectionChangedAction.Add:
 					foreach (var item in e.NewItems)
 					{
-						var question = (BaramakiQuestion)item;
+						var question = (ICodedQuestion)item;
 
 						// IDを付与する．
 						// (0.1.2)IDが既に設定されているかどうかを確認．
@@ -68,10 +68,7 @@ namespace Aldentea.BaramakiMutus.Data
 						{
 							question.ID = GenerateNewID();
 						}
-						// ☆songのプロパティ変更をここで受け取る？MutusDocumentで行えばここでは不要？
-						//question.PropertyChanging += Question_PropertyChanging;
-						//question.PropertyChanged += Question_PropertyChanged;
-						question.NoChanged += Question_NoChanged;
+						//question.NoChanged += Question_NoChanged;
 						question.OnAddedTo(this);
 
 						// ☆songのプロパティ変更をここで受け取る？MutusDocumentで行えばここでは不要？
@@ -93,7 +90,7 @@ namespace Aldentea.BaramakiMutus.Data
 						question.PropertyChanging -= Question_PropertyChanging;
 						question.PropertyChanged -= Question_PropertyChanged;
 
-						question.NoChanged -= Question_NoChanged;
+						//question.NoChanged -= Question_NoChanged;
 
 						questions.Add(question);
 					}
@@ -240,7 +237,6 @@ namespace Aldentea.BaramakiMutus.Data
 		}
 		#endregion
 
-		// (0.3.1)StopPosに関する処理を追加．
 		#region *Questionのプロパティ変更後(Question_PropertyChanged)
 		void Question_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
