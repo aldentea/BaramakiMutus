@@ -1,0 +1,32 @@
+﻿<Window x:Class="Aldentea.BaramakiMutus.SetCodesDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Aldentea.BaramakiMutus"
+        mc:Ignorable="d"
+        Title="SetCodesDialog" Height="600" Width="600">
+	<Window.Resources>
+		<local:CodedQuestionConverter x:Key="questionConverter" />
+	</Window.Resources>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="2*" />
+			<ColumnDefinition Width="1*" />
+		</Grid.ColumnDefinitions>
+		<DataGrid Grid.Column="0" AutoGenerateColumns="False" Margin="10" Name="dataGridQuestions" IsReadOnly="True"
+							ItemsSource="{Binding}" IsSynchronizedWithCurrentItem="True" SelectionMode="Single"
+							KeyDown="dataGridQuestions_KeyDown">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="問題" Binding="{Binding Converter={StaticResource questionConverter}}" Width="*" />
+				<DataGridTextColumn Header="コード" Binding="{Binding Path=Code}" Width="100"/>
+			</DataGrid.Columns>
+		</DataGrid>
+		<DockPanel Grid.Column="1">
+			<TextBox DockPanel.Dock="Top" Height="34" Margin="10" Name="textBoxCode" VerticalAlignment="Top" FontSize="20"
+						 Text="{Binding Path=/Code}" KeyDown="textBoxCode_KeyDown" />
+			<Button DockPanel.Dock="Bottom" Content="閉じる" Margin="10" Name="buttonClose" Height="40" VerticalAlignment="Bottom"
+						Click="buttonClose_Click" />
+		</DockPanel>
+	</Grid>
+</Window>

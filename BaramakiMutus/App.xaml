@@ -1,0 +1,10 @@
+﻿<base:Application x:Class="Aldentea.BaramakiMutus.App"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:local="clr-namespace:Aldentea.BaramakiMutus"
+		xmlns:base="clr-namespace:Aldentea.Wpf.Application;assembly=AldenteaWpfApplication"
+		Startup="Application_Startup" Exit="App_Exit"
+		StartupUri="MainWindow.xaml">
+	<Application.Resources>
+	</Application.Resources>
+</base:Application>
