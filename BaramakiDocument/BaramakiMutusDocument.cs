@@ -429,6 +429,11 @@ namespace Aldentea.BaramakiMutus.Data
 			{
 				sweet.Add(Logs.GenerateElement());
 			}
+			// プレイヤーを追加。
+			if (Players.Count > 0)
+			{
+				sweet.Add(Players.GenerateElement());
+			}
 			return sweet;
 		}
 		#endregion
@@ -504,8 +509,8 @@ namespace Aldentea.BaramakiMutus.Data
 		{
 			base.InitializeDocument();
 			Questions.Initialize();
-			Logs.Initialize();	// SweetMutusGameDocumentよりコピペ。
-
+			Logs.Initialize();  // SweetMutusGameDocumentよりコピペ。
+			Players.Initialize();
 		}
 
 		// (0.1.10)HyperMutusのファイルに対応...したつもり．
@@ -609,6 +614,11 @@ namespace Aldentea.BaramakiMutus.Data
 			if (logsElement != null)
 			{
 				Logs.LoadElement(logsElement);
+			}
+			var playersElement = sweet.Element(PlayersCollection.ELEMENT_NAME);
+			if (playersElement != null)
+			{
+				Players.LoadElement(playersElement);
 			}
 		}
 
@@ -810,6 +820,55 @@ namespace Aldentea.BaramakiMutus.Data
 		#endregion
 
 		#endregion
+
+		#region Player関連
+
+		#region *Playersプロパティ
+		public PlayersCollection Players
+		{
+			get
+			{
+				return _players;
+			}
+		}
+
+		PlayersCollection _players = new PlayersCollection();
+
+		// InitializeDocumentメソッドで初期化する。
+
+		#endregion
+
+
+		public event EventHandler<PlayerEventArgs> PlayerAdded = delegate { };
+		public event EventHandler<PlayerEventArgs> PlayerRemoved = delegate { };
+
+
+		public void AddPlayer(string name)
+		{
+			// nameの検証はPlayers.AddPlayerで行う。
+			// 失敗した場合はArgumentExceptionを返す。
+			Players.AddPlayer(name);
+			if (!IsRehearsal)
+			{
+				AddOperationHistory(new AddPlayerCache(this, name));
+			}
+			this.PlayerAdded(this, new PlayerEventArgs());
+		}
+
+		public void RemovePlayer(string name)
+		{
+			// 失敗した場合はArgumentExceptionを返す。
+			Players.RemovePlayer(name);
+			if (!IsRehearsal)
+			{
+				AddOperationHistory(new RemovePlayerCache(this, name));
+			}
+			this.PlayerRemoved(this, new PlayerEventArgs());
+
+		}
+
+		#endregion
+
 
 	}
 
