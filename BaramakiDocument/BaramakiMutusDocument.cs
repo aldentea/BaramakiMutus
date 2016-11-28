@@ -69,6 +69,9 @@ namespace Aldentea.BaramakiMutus.Data
 			// カレントカテゴリ関連
 			//this.Opened += SweetMutusDocument_Opened;
 
+			// ログ関連
+			_logs.CollectionChanged += Logs_CollectionChanged;	// ※これだけでは、Orderが追加されたときにしかイベントが発生しない！？
+
 			// XML出力関連処理
 			_xmlWriterSettings = new XmlWriterSettings
 			{
@@ -119,6 +122,31 @@ namespace Aldentea.BaramakiMutus.Data
 		/// 問題のNo変更があったときに発生します。
 		/// </summary>
 		public event EventHandler QuestionNoChanged = delegate { };
+
+
+		private void Logs_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		{
+			switch (e.Action)
+			{
+				case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+					IEnumerable<Player> players =
+						e.NewItems.Cast<Log>()
+							.Where(log => log.PlayerID.HasValue)
+							.Select(log => Players.Get(log.PlayerID.Value))
+							.Distinct();
+					foreach (var player in players)
+					{
+						UpdateScore(player);
+					}
+					break;
+			}
+		}
+
+		protected void UpdateScore(Player player)
+		{
+			player.Score = Logs.AllLog.Where(log => log.PlayerID == player.ID && log.Code == "○").Sum(log => log.Value);
+		}
+
 
 		// (0.2.3)
 		private void SweetMutusDocument_UndoCompleted(object sender, UndoCompletedEventArgs e)
