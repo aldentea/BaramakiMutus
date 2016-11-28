@@ -309,6 +309,17 @@ namespace Aldentea.BaramakiMutus.Data
 		}
 		#endregion
 
+		// (0.0.3)
+		/// <summary>
+		/// コードから問題を取得します。該当する問題がない場合は、nullを返します。
+		/// </summary>
+		/// <param name="code"></param>
+		/// <returns></returns>
+		public ICodedQuestion GetQuestionByCode(string code)
+		{
+			return Questions.SingleOrDefault(q => q.Code == code);
+		}
+
 		/*
 
 		// (0.3.3)
@@ -811,10 +822,14 @@ namespace Aldentea.BaramakiMutus.Data
 			this.OrderRemoved(this, new OrderEventArgs(null));
 		}
 
-		// (0.3.0)
 		public void AddLog(string code, decimal value)
 		{
 			Logs.AddLog(code, value);
+		}
+
+		public void AddLog(int playerID, string code, decimal value)
+		{
+			Logs.AddLog(playerID, code, value);
 		}
 
 		#endregion

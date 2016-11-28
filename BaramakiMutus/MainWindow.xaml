@@ -25,11 +25,32 @@
 		<CommandBinding Command="{x:Static local:Commands.SetCodesCommand}"
 										Executed="SetCodes_Executed"
 										CanExecute="SetCodes_CanExecute" />
+		<CommandBinding Command="{x:Static local:Commands.StartGameCommand}"
+										Executed="StartGame_Executed"
+										CanExecute="StartGame_CanExecute" />
+		<CommandBinding Command="{x:Static local:Commands.StartCommand}"
+										Executed="Start_Executed"
+										CanExecute="Start_CanExecute"/>
+		<CommandBinding Command="{x:Static local:Commands.JudgeCommand}"
+										Executed="Judge_Executed"
+										CanExecute="Judge_CanExecute" />
+		<CommandBinding Command="{x:Static input:MediaCommands.TogglePlayPause}"
+										Executed="SwitchPlayPause_Executed"
+										CanExecute="SwitchPlayPause_CanExecute" />
+		<CommandBinding Command="{x:Static local:Commands.ThroughCommand}"
+										Executed="Through_Executed"
+										CanExecute="Through_CanExecute" />
+		<CommandBinding Command="{x:Static local:Commands.UndoJudgementCommand}"
+										Executed="Undo_Executed"
+										CanExecute="Undo_CanExecute" />
+		<CommandBinding Command="{x:Static local:Commands.EndGameCommand}"
+										Executed="EndGame_Executed"
+										CanExecute="EndGame_CanExecute" />
 	</Window.CommandBindings>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="26" />
-			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" MaxHeight="150" />
 			<RowDefinition Height="2*" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
@@ -76,22 +97,22 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="100" />
+					<ColumnDefinition Width="80" />
+					<ColumnDefinition Width="70" />
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
-				<TextBox Height="40" HorizontalAlignment="Left" Margin="6,6,0,0" Name="textBoxQuestionCode" VerticalAlignment="Top" Width="81"
-								 HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" CharacterCasing="Lower"
-								 AcceptsReturn="True">
+				<TextBox Grid.Row="0" Grid.Column="0" Margin="6,6" Name="textBoxQuestionCode"
+								 HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"
+								 CharacterCasing="Lower" AcceptsReturn="True">
 					<TextBox.InputBindings>
 						<KeyBinding Key="Enter" Command="{x:Static local:Commands.StartCommand}" 
 												CommandParameter="{Binding ElementName=textBoxQuestionCode, Path=Text}" />
 					</TextBox.InputBindings>
 				</TextBox>
-				<Button Content="START" Height="30" HorizontalAlignment="Left" Margin="7,-16,0,0" Name="buttonStart" VerticalAlignment="Top"
-								Width="81" Grid.Row="1"
+				<Button Grid.Row="0" Grid.Column="1" Content="START" Margin="6,6" Name="buttonStart"
 								Command="{x:Static local:Commands.StartCommand}"
 								CommandParameter="{Binding ElementName=textBoxQuestionCode, Path=Text}"/>
-				<Label Name="label1" Style="{StaticResource answerLabelStyle}" Grid.Row="0" Grid.Column="1">
+				<Label Name="label1" Style="{StaticResource answerLabelStyle}" Grid.Row="0" Grid.Column="2">
 					<Label.Content>
 						<MultiBinding Converter="{StaticResource maskAnswerConverter}" ConverterParameter="title">
 							<Binding Path="CurrentQuestion" />
@@ -99,7 +120,7 @@
 						</MultiBinding>
 					</Label.Content>
 				</Label>
-				<Label Name="label2" Grid.Row="1" Grid.Column="1"
+				<Label Name="label2" Grid.Row="1" Grid.Column="2"
 							 Style="{StaticResource answerLabelStyle}">
 					<Label.Content>
 						<MultiBinding Converter="{StaticResource maskAnswerConverter}" ConverterParameter="artist">
@@ -108,7 +129,7 @@
 						</MultiBinding>
 					</Label.Content>
 				</Label>
-				<Button Content="Play/Pause" Height="23" Margin="7,26,13,0" Name="buttonPlayPause" VerticalAlignment="Top" Grid.Row="1"
+				<Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="Play/Pause" Margin="6,6" Name="buttonPlayPause" 
 								Command="{x:Static input:MediaCommands.TogglePlayPause}" />
 			</Grid>
 		</GroupBox>
@@ -122,13 +143,24 @@
 									ItemsSource="{Binding Players}" IsReadOnly="True" SelectionMode="Single" Grid.Column="1">
 					<DataGrid.Columns>
 						<DataGridTextColumn Width="Auto" Header="#" Binding="{Binding Path=ID}" />
-						<DataGridTextColumn Width="2*" Header="名前" Binding="{Binding Path=Name}" />
+						<DataGridTextColumn Width="2*" Header="名前" Binding="{Binding Path=Name}">
+							<DataGridTextColumn.HeaderStyle>
+								<Style TargetType="DataGridColumnHeader">
+									<Setter Property="HorizontalContentAlignment" Value="Center" />
+								</Style>
+							</DataGridTextColumn.HeaderStyle>
+						</DataGridTextColumn>
 						<DataGridTextColumn Width="*" Header="点" Binding="{Binding Path=Score}">
-							<DataGridTextColumn.CellStyle>
-								<Style TargetType="DataGridCell">
+							<DataGridTextColumn.HeaderStyle>
+								<Style TargetType="DataGridColumnHeader">
+									<Setter Property="HorizontalContentAlignment" Value="Center" />
+								</Style>
+							</DataGridTextColumn.HeaderStyle>
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="TextBlock">
 									<Setter Property="HorizontalAlignment" Value="Right" />
 								</Style>
-							</DataGridTextColumn.CellStyle>
+							</DataGridTextColumn.ElementStyle>
 						</DataGridTextColumn>
 					</DataGrid.Columns>
 					<DataGrid.InputBindings>

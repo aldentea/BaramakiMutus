@@ -35,10 +35,10 @@ namespace Aldentea.BaramakiMutus
 	{
 		public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			var question = values[0] as Data.BaramakiQuestion;
-			if (question != null)
+			if (values[0] is BaramakiQuestion)
 			{
-				MainWindow.Mode mode = (MainWindow.Mode)values[1];
+				var question = (BaramakiQuestion)values[0];
+				var mode = (MainWindow.Mode)values[1];
 
 				if (mode == MainWindow.Mode.Judged || mode == MainWindow.Mode.Waiting)
 				{
@@ -52,6 +52,15 @@ namespace Aldentea.BaramakiMutus
 							return question.Title;
 					}
 				}
+			}
+			else if (values[0] is HazureQuestion)
+			{
+				var mode = (MainWindow.Mode)values[1];
+				if (mode == MainWindow.Mode.Playing || mode == MainWindow.Mode.Judged || mode == MainWindow.Mode.Waiting)
+				{
+					return "*ハズレ*";
+				}
+
 			}
 			return "？？？";
 		}
