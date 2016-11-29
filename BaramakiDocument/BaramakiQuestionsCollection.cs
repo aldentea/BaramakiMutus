@@ -22,9 +22,9 @@ namespace Aldentea.BaramakiMutus.Data
 		#region *コンストラクタ(BaramakiQuestionsCollection)
 		BaramakiQuestionsCollection()
 		{
-			/*
+			
 			this.CollectionChanged += QuestionsCollection_CollectionChanged;
-			*/
+			
 			Initialize();
 		}
 
