@@ -143,13 +143,18 @@
 				<DataGrid AutoGenerateColumns="False" Margin="6,6,6,6" Name="dataGridPlayers" SelectionChanged="dataGridPlayers_SelectionChanged"
 									ItemsSource="{Binding Players}" IsReadOnly="True" SelectionMode="Single" Grid.Column="1">
 					<DataGrid.Columns>
-						<DataGridTextColumn Width="Auto" Header="#" Binding="{Binding Path=ID}" />
+		<!--				<DataGridTextColumn Width="Auto" Header="#" Binding="{Binding Path=ID}" /> -->
 						<DataGridTextColumn Width="2*" Header="名前" Binding="{Binding Path=Name}">
 							<DataGridTextColumn.HeaderStyle>
 								<Style TargetType="DataGridColumnHeader">
 									<Setter Property="HorizontalContentAlignment" Value="Center" />
 								</Style>
 							</DataGridTextColumn.HeaderStyle>
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="TextBlock">
+									<Setter Property="VerticalAlignment" Value="Center" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
 						</DataGridTextColumn>
 						<DataGridTextColumn Width="*" Header="点" Binding="{Binding Path=Score}">
 							<DataGridTextColumn.HeaderStyle>
@@ -160,6 +165,7 @@
 							<DataGridTextColumn.ElementStyle>
 								<Style TargetType="TextBlock">
 									<Setter Property="HorizontalAlignment" Value="Right" />
+									<Setter Property="VerticalAlignment" Value="Center" />
 								</Style>
 							</DataGridTextColumn.ElementStyle>
 						</DataGridTextColumn>
@@ -181,6 +187,7 @@
 						</Style>
 					</DataGrid.Resources>
 				</DataGrid>
+				
 				<Button Height="40" HorizontalAlignment="Left" Margin="6,6,6,6" Name="buttonMaru"
 								VerticalAlignment="Top" Width="50"
 								Command="{x:Static local:Commands.JudgeCommand}" CommandParameter="○" >
@@ -197,7 +204,7 @@
 				</Button>
 			</Grid>
 		</GroupBox>
-		<WrapPanel Margin="6,6,6,6" Name="wrapPanelCategories" FlowDirection="LeftToRight" Orientation="Vertical"
+		<WrapPanel Margin="6,6,6,6" Name="wrapPanelCategories" FlowDirection="LeftToRight" Orientation="Horizontal"
 							 Grid.Row="2" Grid.Column="1">
 			<WrapPanel.Resources>
 				<Style TargetType="TextBlock">
@@ -207,10 +214,9 @@
 					<Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight, Converter={StaticResource proposalConverter}, ConverterParameter=0.6}" />
 				</Style>
 			</WrapPanel.Resources>
-			<TextBlock Text="BEATLES (1.5)"/>
-			<TextBlock Text="dream (0)"/>
-			<TextBlock Text="EARTH (1.5)"/>
-			<TextBlock Text="dream (0)"/>
+			<TextBlock Text="正解すると" />
+			<TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=CurrentGain}" />
+			<TextBlock Text="点入ります" />
 		</WrapPanel>
 		<Slider Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="0,30,0,30" Name="sliderVolume" HorizontalAlignment="Center" Orientation="Vertical"
 						Maximum="1" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=MySongPlayer.Volume}" LargeChange="0.2" SmallChange="0.01" />
