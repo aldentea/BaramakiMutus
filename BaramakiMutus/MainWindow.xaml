@@ -76,6 +76,7 @@
 				<MenuItem Header="元に戻す(_U)" Command="{x:Static local:Commands.UndoJudgementCommand}" />
 				<MenuItem Header="スルー(_T)" Command="{x:Static local:Commands.ThroughCommand}" />
 				<MenuItem Header="ゲーム終了(_E)" Command="{x:Static local:Commands.EndGameCommand}" />
+				<MenuItem Header="リハーサル(_R)" IsCheckable="True" IsChecked="{Binding Path=IsRehearsal}" />
 			</MenuItem>
 		</Menu>
 		<GroupBox Header="Question" Margin="6,6,6,6" Name="groupBoxQuestion"

@@ -70,7 +70,8 @@ namespace Aldentea.BaramakiMutus.Data
 			//this.Opened += SweetMutusDocument_Opened;
 
 			// ログ関連
-			_logs.CollectionChanged += Logs_CollectionChanged;	// ※これだけでは、Orderが追加されたときにしかイベントが発生しない！？
+			//_logs.CollectionChanged += Logs_CollectionChanged;  // ※これだけでは、Orderが追加されたときにしかイベントが発生しない！？
+			this.LogAdded += Logs_Changed;
 
 			// XML出力関連処理
 			_xmlWriterSettings = new XmlWriterSettings
@@ -79,6 +80,7 @@ namespace Aldentea.BaramakiMutus.Data
 				NewLineHandling = NewLineHandling.Entitize
 			};
 		}
+
 		#endregion
 
 		#region *アイテム変更時(Songs_ItemChanged)
@@ -123,24 +125,33 @@ namespace Aldentea.BaramakiMutus.Data
 		/// </summary>
 		public event EventHandler QuestionNoChanged = delegate { };
 
-
-		private void Logs_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-		{
-			switch (e.Action)
-			{
-				case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
-					IEnumerable<Player> players =
-						e.NewItems.Cast<Log>()
-							.Where(log => log.PlayerID.HasValue)
-							.Select(log => Players.Get(log.PlayerID.Value))
-							.Distinct();
-					foreach (var player in players)
+		/*
+				private void Logs_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+				{
+					switch (e.Action)
 					{
-						UpdateScore(player);
+						case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+							IEnumerable<Player> players =
+								e.NewItems.Cast<Log>()
+									.Where(log => log.PlayerID.HasValue)
+									.Select(log => Players.Get(log.PlayerID.Value))
+									.Distinct();
+							foreach (var player in players)
+							{
+								UpdateScore(player);
+							}
+							break;
 					}
-					break;
+				}
+				*/
+		private void Logs_Changed(object sender, LogEventArgs e)
+		{
+			if (e.PlayerID.HasValue)
+			{
+				UpdateScore(Players.Get(e.PlayerID.Value));
 			}
 		}
+
 
 		protected void UpdateScore(Player player)
 		{

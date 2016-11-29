@@ -504,7 +504,7 @@ namespace Aldentea.BaramakiMutus
 		}
 		decimal _currentGain = 2;
 
-		decimal _kachinuke = 10;
+		decimal _kachinuke = 3;
 
 		/// <summary>
 		/// 出題の終了処理をします．
