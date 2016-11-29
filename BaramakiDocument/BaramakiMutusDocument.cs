@@ -17,7 +17,7 @@ namespace Aldentea.BaramakiMutus.Data
 
 	// SweetMutus.Data.SweetMutusGameDocumentをコピペしてみる。
 
-	public class BaramakiMutusDocument : Aldentea.Wpf.Document.DocumentWithOperationHistory, GrandMutus.Data.IMutusGameDocument
+	public class BaramakiMutusDocument : Aldentea.Wpf.Document.DocumentWithOperationHistory, IMutusGameDocument
 	{
 
 		#region SweetMutusDocumentからのコピペ
@@ -785,6 +785,17 @@ namespace Aldentea.BaramakiMutus.Data
 		public event EventHandler<OrderEventArgs> OrderAdded = delegate { };
 		public event EventHandler<OrderEventArgs> OrderRemoved = delegate { };
 
+		/// <summary>
+		/// ログが追加された時に発生します。
+		/// </summary>
+		public event EventHandler<LogEventArgs> LogAdded = delegate { };
+
+		/// <summary>
+		/// ログが削除されたときに発生します。
+		/// </summary>
+		public event EventHandler<LogEventArgs> LogRemoved = delegate { };
+
+
 		// (0.3.2)
 		#region *IsRehearsalプロパティ
 		/// <summary>
@@ -815,6 +826,7 @@ namespace Aldentea.BaramakiMutus.Data
 
 		// (0.3.2)リハーサルモードを実装。
 		// (0.3.0)
+		#region *出題順を追加(AddOrder)
 		public void AddOrder(int? questionID)
 		{
 			if (questionID.HasValue)
@@ -831,6 +843,7 @@ namespace Aldentea.BaramakiMutus.Data
 			}
 			this.OrderAdded(this, new OrderEventArgs(questionID));
 		}
+		#endregion
 
 		// (0.3.0)
 		//public bool AddFirstOrder()
@@ -850,15 +863,54 @@ namespace Aldentea.BaramakiMutus.Data
 			this.OrderRemoved(this, new OrderEventArgs(null));
 		}
 
+		// (0.0.5)LogAddedイベントを発生するように変更。
 		public void AddLog(string code, decimal value)
 		{
-			Logs.AddLog(code, value);
+			this.AddLog(null, code, value);
 		}
 
-		public void AddLog(int playerID, string code, decimal value)
+		// (0.0.5)LogAddedイベントを発生するように変更。
+		public void AddLog(int? playerID, string code, decimal value)
 		{
 			Logs.AddLog(playerID, code, value);
+			if (!this.IsRehearsal)
+			{
+				AddOperationHistory(new AddLogCache(this, Logs.CurrentOrder.ID, code, value, playerID));
+			}
+			LogAdded(this, new LogEventArgs(code, value, playerID));
 		}
+
+		// (0.0.5)アンドゥ用？
+		public void AddLog(Log log, int order_id)
+		{
+			Logs.First(o => o.ID == order_id).Add(log);
+		}
+
+		public void RemoveLog(int log_id)
+		{
+			var order = Logs.First(o => o.Any(lg => lg.ID == log_id));
+			var log = order.First(lg => lg.ID == log_id);
+			RemoveLog(log, order);
+		}
+
+		public void RemoveLog(int order_id, string code, decimal value, int? player_id)
+		{
+			var order = Logs.First(o => o.ID == order_id);
+			var log = order.First(lg => lg.Code == code && lg.Value == value && lg.PlayerID == player_id);
+			RemoveLog(log, order);
+		}
+
+		protected void RemoveLog(Log log, Order order)
+		{
+			order.Remove(log);
+			if (!this.IsRehearsal)
+			{
+				AddOperationHistory(new RemoveLogCache(this, order.ID, log));
+			}
+			LogRemoved(this, new LogEventArgs(log.Code, log.Value, log.PlayerID, order.QuestionID));
+
+		}
+
 
 		#endregion
 
