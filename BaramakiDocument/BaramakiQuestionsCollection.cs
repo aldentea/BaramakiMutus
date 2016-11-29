@@ -49,7 +49,7 @@ namespace Aldentea.BaramakiMutus.Data
 		/// 問題が削除された時に発生します．
 		/// </summary>
 		public event EventHandler<ItemEventArgs<IEnumerable<BaramakiQuestion>>> QuestionsRemoved = delegate { };
-
+		*/
 
 		// (*0.4.1) Remove時の処理を追加(ほとんどSongsCollectionのコピペ)．
 		#region *コレクション変更時(QuestionsCollection_CollectionChanged)
@@ -69,7 +69,9 @@ namespace Aldentea.BaramakiMutus.Data
 							question.ID = GenerateNewID();
 						}
 						//question.NoChanged += Question_NoChanged;
-						question.OnAddedTo(this);
+
+						// ↓※これは後でなんとかする。
+						//question.OnAddedTo(this);
 
 						// ☆songのプロパティ変更をここで受け取る？MutusDocumentで行えばここでは不要？
 						// ↑とりあえずこのクラスで使っています。
@@ -78,6 +80,8 @@ namespace Aldentea.BaramakiMutus.Data
 					}
 					break;
 
+					// 削除については、とりあえず実装しない。
+					/*
 				// (0.2.1.1)削除時にいったんNoをnullにするように修正．
 				case NotifyCollectionChangedAction.Remove:
 					IList<BaramakiQuestion> questions = new List<BaramakiQuestion>();
@@ -102,11 +106,12 @@ namespace Aldentea.BaramakiMutus.Data
 						this.QuestionsRemoved(this, new ItemEventArgs<IEnumerable<BaramakiQuestion>> { Item = questions });
 					}
 					break;
+					*/
 			}
 
 		}
 		#endregion
-		*/
+		
 		#endregion
 
 		// (*0.3.3)SongsCollectionからのコピペ。共通実装にしますか？
