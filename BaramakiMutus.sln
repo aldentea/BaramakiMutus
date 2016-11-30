@@ -7,20 +7,37 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaramakiMutus", "BaramakiMu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaramakiDocument", "BaramakiDocument\BaramakiDocument.csproj", "{2F9B6717-4430-457C-8DCD-2F924B3D37C3}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BaramakiMutusSetup_x64", "BaramakiMutusSetup_x64\BaramakiMutusSetup_x64.vdproj", "{6AFAF43D-4376-4983-8AE5-2E8F78DF76EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3F1E667E-858B-418C-A8EE-2F09DEAD9FB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3F1E667E-858B-418C-A8EE-2F09DEAD9FB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F1E667E-858B-418C-A8EE-2F09DEAD9FB5}.Debug|x64.ActiveCfg = Debug|x64
+		{3F1E667E-858B-418C-A8EE-2F09DEAD9FB5}.Debug|x64.Build.0 = Debug|x64
 		{3F1E667E-858B-418C-A8EE-2F09DEAD9FB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F1E667E-858B-418C-A8EE-2F09DEAD9FB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F1E667E-858B-418C-A8EE-2F09DEAD9FB5}.Release|x64.ActiveCfg = Release|x64
+		{3F1E667E-858B-418C-A8EE-2F09DEAD9FB5}.Release|x64.Build.0 = Release|x64
 		{2F9B6717-4430-457C-8DCD-2F924B3D37C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F9B6717-4430-457C-8DCD-2F924B3D37C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F9B6717-4430-457C-8DCD-2F924B3D37C3}.Debug|x64.ActiveCfg = Debug|x64
+		{2F9B6717-4430-457C-8DCD-2F924B3D37C3}.Debug|x64.Build.0 = Debug|x64
 		{2F9B6717-4430-457C-8DCD-2F924B3D37C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F9B6717-4430-457C-8DCD-2F924B3D37C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F9B6717-4430-457C-8DCD-2F924B3D37C3}.Release|x64.ActiveCfg = Release|x64
+		{2F9B6717-4430-457C-8DCD-2F924B3D37C3}.Release|x64.Build.0 = Release|x64
+		{6AFAF43D-4376-4983-8AE5-2E8F78DF76EF}.Debug|Any CPU.ActiveCfg = Debug
+		{6AFAF43D-4376-4983-8AE5-2E8F78DF76EF}.Debug|x64.ActiveCfg = Debug
+		{6AFAF43D-4376-4983-8AE5-2E8F78DF76EF}.Release|Any CPU.ActiveCfg = Release
+		{6AFAF43D-4376-4983-8AE5-2E8F78DF76EF}.Release|x64.ActiveCfg = Release
+		{6AFAF43D-4376-4983-8AE5-2E8F78DF76EF}.Release|x64.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
