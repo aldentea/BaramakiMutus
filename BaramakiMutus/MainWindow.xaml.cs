@@ -71,6 +71,9 @@ namespace Aldentea.BaramakiMutus
 			}
 			// 音量を復元。
 			this.MySongPlayer.Volume = MySettings.SongPlayerVolume;
+
+			// 勝ち抜け条件を設定。
+			this._kachinuke = MySettings.ScoreToWin;
 		}
 		#endregion
 
