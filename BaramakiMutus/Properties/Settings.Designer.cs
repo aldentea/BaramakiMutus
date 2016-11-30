@@ -105,5 +105,17 @@ namespace Aldentea.BaramakiMutus.Properties {
                 this["SongPlayerVolume"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public decimal ScoreToWin {
+            get {
+                return ((decimal)(this["ScoreToWin"]));
+            }
+            set {
+                this["ScoreToWin"] = value;
+            }
+        }
     }
 }
