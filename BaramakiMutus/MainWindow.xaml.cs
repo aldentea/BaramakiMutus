@@ -558,6 +558,20 @@ namespace Aldentea.BaramakiMutus
 
 		#endregion
 
+		// (0.0.5)
+		private void MenuItemExportLog_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new Microsoft.Win32.SaveFileDialog();
+			if (dialog.ShowDialog() == true)
+			{
+				Encoding encoding = Encoding.UTF8;
+				using (var writer = new System.IO.StreamWriter(dialog.FileName, false, Encoding.UTF8))
+				{
+					MyDocument.ExportLog(writer);
+				}
+			}
+		}
+
 
 		protected void NotifyPropertyChanged(string propertyName)
 		{
