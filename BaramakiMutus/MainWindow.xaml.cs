@@ -22,7 +22,7 @@ namespace Aldentea.BaramakiMutus
 	/// <summary>
 	/// MainWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class MainWindow : Aldentea.Wpf.Application.BasicWindow, INotifyPropertyChanged
+	public partial class MainWindow : Wpf.Application.BasicWindow, INotifyPropertyChanged
 	{
 
 
@@ -50,7 +50,15 @@ namespace Aldentea.BaramakiMutus
 			InitializeComponent();
 
 			this.FileHistoryShortcutParent = menuItemHistory;
+			MyDocument.Initialized += MyDocument_Initialized;
+		}
 
+		private void MyDocument_Initialized(object sender, EventArgs e)
+		{
+			this.CurrentGain = 2;
+			this.CurrentMode = Mode.Standby;
+			this.CurrentJudgement = null;
+			this.CurrentQuestion = null;
 		}
 
 
@@ -95,6 +103,8 @@ namespace Aldentea.BaramakiMutus
 			this.Close();
 		}
 
+
+		// このあたりはVM的にまとめたほうがいいのかな？
 
 		#region *CurrentModeプロパティ
 		public Mode CurrentMode
