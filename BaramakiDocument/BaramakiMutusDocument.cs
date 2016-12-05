@@ -779,7 +779,6 @@ namespace Aldentea.BaramakiMutus.Data
 
 		#region SweetMutusGameDocumentからのコピペ
 
-		// (0.3.0)
 		#region *Logsプロパティ
 		public LogsCollection Logs
 		{
@@ -807,7 +806,6 @@ namespace Aldentea.BaramakiMutus.Data
 		public event EventHandler<LogEventArgs> LogRemoved = delegate { };
 
 
-		// (0.3.2)
 		#region *IsRehearsalプロパティ
 		/// <summary>
 		/// リハーサルモードであるかどうかの値を取得／設定します。
@@ -926,10 +924,24 @@ namespace Aldentea.BaramakiMutus.Data
 		#endregion
 
 
+		// (0.0.8) TSV形式に対応。
 		// (0.0.7) とりあえずaldentea形式のみ実装。
-		public void ExportLog(StreamWriter writer)
+		public void ExportLog(StreamWriter writer, GameLogFormat format = GameLogFormat.TSV)
 		{
-			// aldentea式の他に、TSVにも対応する予定。
+			switch(format)
+			{
+				case GameLogFormat.TSV:
+					ExportLogTSV(writer);
+					return;
+				case GameLogFormat.Aldentea:
+					ExportLogAldentea(writer);
+					return;
+			}
+		}
+
+		// (0.0.8)
+		protected virtual void ExportLogAldentea(StreamWriter writer)
+		{
 
 			Dictionary<int, decimal> score_table = new Dictionary<int, decimal>();
 			foreach (var player in Players)
@@ -969,6 +981,49 @@ namespace Aldentea.BaramakiMutus.Data
 			}
 
 		}
+
+		// (0.0.8)
+		protected virtual void ExportLogTSV(StreamWriter writer)
+		{
+			Dictionary<int, decimal> score_table = new Dictionary<int, decimal>();
+			foreach (var player in Players)
+			{
+				score_table.Add(player.ID, 0);
+			}
+
+			foreach (var order in this.Logs.Where(o => o.QuestionID.HasValue))
+			{
+				var q = this.Questions.Get(order.QuestionID.Value);
+				if (q is BaramakiQuestion)
+				{
+					var question = (BaramakiQuestion)q;
+					var log = order.First();
+					var player = Players.Get(log.PlayerID.Value);
+
+					string q_string = $"{order.ID}	{player.Name}	{q.Code}	{question.Title}	{question.Artist}";
+					switch (log.Code)
+					{
+						case "○":
+							score_table[player.ID] += log.Value;
+							writer.WriteLine($"{q_string}	○	{player.Name}	{log.Value}	{score_table[player.ID]}");
+							break;
+						case "×":
+							writer.WriteLine($"{q_string}	×");
+							break;
+					}
+				}
+				else if (q is HazureQuestion)
+				{
+					var log = order.First();
+					var rate = order.First(l => l.Code == "＋").Value;
+					var player = Players.Get(log.PlayerID.Value);
+					writer.WriteLine($"{order.ID}	{player.Name}	{q.Code}	*ハズレ*		レート	{rate}");
+				}
+
+			}
+
+		}
+
 
 		#endregion
 
@@ -1021,6 +1076,19 @@ namespace Aldentea.BaramakiMutus.Data
 		#endregion
 
 
+	}
+
+	// (0.0.8)
+	public enum GameLogFormat
+	{
+		/// <summary>
+		/// タブ区切りのテキストです。
+		/// </summary>
+		TSV,
+		/// <summary>
+		/// aldentea方式です。
+		/// </summary>
+		Aldentea
 	}
 
 

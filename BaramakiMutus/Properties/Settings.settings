@@ -26,5 +26,8 @@
     <Setting Name="ScoreToWin" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
+    <Setting Name="GameLogFormat" Type="Aldentea.BaramakiMutus.Data.GameLogFormat" Scope="User">
+      <Value Profile="(Default)">TSV</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

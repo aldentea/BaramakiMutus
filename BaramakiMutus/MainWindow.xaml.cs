@@ -567,7 +567,7 @@ namespace Aldentea.BaramakiMutus
 				Encoding encoding = Encoding.UTF8;
 				using (var writer = new System.IO.StreamWriter(dialog.FileName, false, Encoding.UTF8))
 				{
-					MyDocument.ExportLog(writer);
+					MyDocument.ExportLog(writer, MySettings.GameLogFormat);
 				}
 			}
 		}
