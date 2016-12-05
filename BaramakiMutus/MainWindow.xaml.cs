@@ -59,6 +59,8 @@ namespace Aldentea.BaramakiMutus
 			this.CurrentMode = Mode.Standby;
 			this.CurrentJudgement = null;
 			this.CurrentQuestion = null;
+
+			MyDocument.UndoCompleted += MyDocument_UndoCompleted;
 		}
 
 
@@ -564,6 +566,20 @@ namespace Aldentea.BaramakiMutus
 		}
 
 		#endregion
+
+		// (0.0.5)
+		private void MyDocument_UndoCompleted(object sender, Wpf.Document.UndoCompletedEventArgs e)
+		{
+			if (e.OperationCache is GrandMutus.Data.AddLogCache)
+			{
+				var l_cache = (GrandMutus.Data.AddLogCache)e.OperationCache;
+				if (l_cache.Code == "＋")
+				{
+					// CurrentGainを元に戻す。
+					CurrentGain -= 0.2M;
+				} 
+			}
+		}
 
 
 		#endregion
