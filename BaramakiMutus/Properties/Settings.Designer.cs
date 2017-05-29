@@ -117,5 +117,17 @@ namespace Aldentea.BaramakiMutus.Properties {
                 this["ScoreToWin"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TSV")]
+        public global::Aldentea.BaramakiMutus.Data.GameLogFormat GameLogFormat {
+            get {
+                return ((global::Aldentea.BaramakiMutus.Data.GameLogFormat)(this["GameLogFormat"]));
+            }
+            set {
+                this["GameLogFormat"] = value;
+            }
+        }
     }
 }

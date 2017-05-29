@@ -467,6 +467,7 @@ namespace Aldentea.BaramakiMutus.Data
 		// ↓これいるかな？
 
 		// (0.3.1.1)
+		#region *IDから問題を取得(Get)
 		/// <summary>
 		/// 指定したIDがついた問題を返します。
 		/// 該当する問題がない場合は、InvalidOperationExceptionをスローします。
@@ -477,6 +478,7 @@ namespace Aldentea.BaramakiMutus.Data
 		{
 			return this.Items.Single(q => q.ID == id);
 		}
+		#endregion
 
 		#region XML入出力関連
 
@@ -668,8 +670,7 @@ namespace Aldentea.BaramakiMutus.Data
 		#endregion
 		*/
 
-
+		#endregion
 
 	}
 }
-#endregion

@@ -12,7 +12,7 @@
 			Closed="MainWindow_Closed" Initialized="MainWindow_Initialized">
 	<Window.Resources>
 		<util:CaptionConverter x:Key="captionConverter" ApplicationName="BaramakiMutus" /> 
-		<local:ProposalConveter x:Key="proposalConverter" />
+		<util:ProposalConveter x:Key="proposalConverter" />
 	</Window.Resources>
 	<Window.Title>
 		<MultiBinding Converter="{StaticResource captionConverter}">
@@ -77,6 +77,7 @@
 				<MenuItem Header="スルー(_T)" Command="{x:Static local:Commands.ThroughCommand}" />
 				<MenuItem Header="ゲーム終了(_E)" Command="{x:Static local:Commands.EndGameCommand}" />
 				<MenuItem Header="リハーサル(_R)" IsCheckable="True" IsChecked="{Binding Path=IsRehearsal}" />
+				<MenuItem Header="ログエクスポート(_L)..." Click="MenuItemExportLog_Click"/>
 			</MenuItem>
 		</Menu>
 		<GroupBox Header="Question" Margin="6,6,6,6" Name="groupBoxQuestion"
@@ -179,7 +180,7 @@
 							<Setter Property="Height" 
 											Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, 
 																			Path=ActualHeight,
-																			Converter={StaticResource proposalConverter}, ConverterParameter=0.2}" />
+																			Converter={StaticResource proposalConverter}, ConverterParameter=0.08}" />
 							<Setter Property="FontSize" 
 											Value="{Binding RelativeSource={RelativeSource Mode=Self}, 
 																			Path=ActualHeight,

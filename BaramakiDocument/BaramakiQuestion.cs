@@ -9,9 +9,11 @@ using System.Xml.Linq;
 namespace Aldentea.BaramakiMutus.Data
 {
 
+	#region BaramakiQuestionクラス
 	public class BaramakiQuestion : SweetMutus.Data.SweetQuestion, ICodedQuestion
 	{
 
+		#region *コンストラクタ(BaramakiQuestion)
 		public BaramakiQuestion() : base()
 		{
 
@@ -34,7 +36,9 @@ namespace Aldentea.BaramakiMutus.Data
 			PlayPos = sweetQuestion.PlayPos;
 			StopPos = sweetQuestion.StopPos;
 		}
+		#endregion
 
+		#region ICodedQuestion実装
 
 		// Codeプロパティを追加する。
 
@@ -56,6 +60,8 @@ namespace Aldentea.BaramakiMutus.Data
 			}
 		}
 		string _code = string.Empty;
+		#endregion
+
 		#endregion
 
 		#region XML入出力関連
@@ -91,5 +97,6 @@ namespace Aldentea.BaramakiMutus.Data
 
 
 	}
+	#endregion
 
 }

@@ -19,10 +19,11 @@ namespace Aldentea.BaramakiMutus
 {
 	using Data;
 
+	#region MainWindowクラス
 	/// <summary>
 	/// MainWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class MainWindow : Aldentea.Wpf.Application.BasicWindow, INotifyPropertyChanged
+	public partial class MainWindow : Wpf.Application.BasicWindow, INotifyPropertyChanged
 	{
 
 
@@ -44,15 +45,27 @@ namespace Aldentea.BaramakiMutus
 		#endregion
 
 
-
+		#region *コンストラクタ(MainWindow)
 		public MainWindow()
 		{
 			InitializeComponent();
 
 			this.FileHistoryShortcutParent = menuItemHistory;
-
+			MyDocument.Initialized += MyDocument_Initialized;
 		}
+		#endregion
 
+		#region *ドキュメント初期化時(MyDocument_Initialized)
+		private void MyDocument_Initialized(object sender, EventArgs e)
+		{
+			this.CurrentGain = 2;
+			this.CurrentMode = Mode.Standby;
+			this.CurrentJudgement = null;
+			this.CurrentQuestion = null;
+
+			MyDocument.UndoCompleted += MyDocument_UndoCompleted;
+		}
+		#endregion
 
 		#region *ウィンドウ初期化時(MainWindow_Initialized)
 		private void MainWindow_Initialized(object sender, EventArgs e)
@@ -90,11 +103,35 @@ namespace Aldentea.BaramakiMutus
 		#endregion
 
 
+		#region メニュー
+
+		#region *ファイル - 終了
 		private void menuItemClose_Click(object sender, RoutedEventArgs e)
 		{
 			this.Close();
 		}
+		#endregion
 
+		// (0.0.5)
+		#region *ファイル - エクスポート
+		private void MenuItemExportLog_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new Microsoft.Win32.SaveFileDialog();
+			if (dialog.ShowDialog() == true)
+			{
+				Encoding encoding = Encoding.UTF8;
+				using (var writer = new System.IO.StreamWriter(dialog.FileName, false, Encoding.UTF8))
+				{
+					MyDocument.ExportLog(writer, MySettings.GameLogFormat);
+				}
+			}
+		}
+		#endregion
+
+		#endregion
+
+
+		// このあたりはVM的にまとめたほうがいいのかな？
 
 		#region *CurrentModeプロパティ
 		public Mode CurrentMode
@@ -555,9 +592,25 @@ namespace Aldentea.BaramakiMutus
 
 		#endregion
 
+		// (0.0.5)
+		private void MyDocument_UndoCompleted(object sender, Wpf.Document.UndoCompletedEventArgs e)
+		{
+			if (e.OperationCache is GrandMutus.Data.AddLogCache)
+			{
+				var l_cache = (GrandMutus.Data.AddLogCache)e.OperationCache;
+				if (l_cache.Code == "＋")
+				{
+					// CurrentGainを元に戻す。
+					CurrentGain -= 0.2M;
+				} 
+			}
+		}
+
 
 		#endregion
 
+
+		#region INotifyPropertyChanged実装
 
 		protected void NotifyPropertyChanged(string propertyName)
 		{
@@ -565,5 +618,9 @@ namespace Aldentea.BaramakiMutus
 		}
 		public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
+		#endregion
+
 	}
+	#endregion
+
 }

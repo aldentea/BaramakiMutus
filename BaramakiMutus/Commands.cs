@@ -3,6 +3,7 @@
 namespace Aldentea.BaramakiMutus
 {
 
+	#region [static]Commandsクラス
 	public static class Commands
 	{
 		/// <summary>
@@ -41,4 +42,6 @@ namespace Aldentea.BaramakiMutus
 		public static RoutedCommand ThroughCommand = new RoutedCommand();
 
 	}
+	#endregion
+
 }

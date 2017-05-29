@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Aldentea.BaramakiMutus.Data
 {
+
+	#region ICodedQuestionインターフェイス
 	public interface ICodedQuestion : GrandMutus.Data.IQuestionBase
 	{
 		string Code { get; set; }
@@ -33,4 +35,6 @@ namespace Aldentea.BaramakiMutus.Data
 		#endregion
 
 	}
+	#endregion
+
 }

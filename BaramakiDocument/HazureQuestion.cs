@@ -8,6 +8,8 @@ using System.Xml.Linq;
 
 namespace Aldentea.BaramakiMutus.Data
 {
+
+	#region HazureQuestionクラス
 	public class HazureQuestion : GrandMutus.Data.QuestionBase<BaramakiQuestionsCollection>, ICodedQuestion
 	{
 
@@ -85,5 +87,6 @@ namespace Aldentea.BaramakiMutus.Data
 
 
 	}
+	#endregion
 
 }
