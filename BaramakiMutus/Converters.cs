@@ -9,26 +9,6 @@ namespace Aldentea.BaramakiMutus
 {
 	using Data;
 
-	// 定数をかけるだけのConverter．そのうち汎用に移します．
-	public class ProposalConveter : IValueConverter
-	{
-		#region IValueConverter メンバー
-
-		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-		{
-			double gain = parameter == null ? 1.0 : System.Convert.ToDouble(parameter);
-			return System.Convert.ToDouble(value) * gain;
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-		{
-			double gain = parameter == null ? 1.0 : System.Convert.ToDouble(parameter);
-			return System.Convert.ToDouble(value) / gain;
-		}
-
-		#endregion
-	}
-
 
 	#region MaskAnswerConverterクラス
 	public class MaskAnswerConverter : IMultiValueConverter

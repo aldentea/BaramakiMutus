@@ -12,7 +12,7 @@
 			Closed="MainWindow_Closed" Initialized="MainWindow_Initialized">
 	<Window.Resources>
 		<util:CaptionConverter x:Key="captionConverter" ApplicationName="BaramakiMutus" /> 
-		<local:ProposalConveter x:Key="proposalConverter" />
+		<util:ProposalConveter x:Key="proposalConverter" />
 	</Window.Resources>
 	<Window.Title>
 		<MultiBinding Converter="{StaticResource captionConverter}">
