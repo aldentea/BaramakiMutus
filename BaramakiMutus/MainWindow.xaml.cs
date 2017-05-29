@@ -19,6 +19,7 @@ namespace Aldentea.BaramakiMutus
 {
 	using Data;
 
+	#region MainWindowクラス
 	/// <summary>
 	/// MainWindow.xaml の相互作用ロジック
 	/// </summary>
@@ -44,7 +45,7 @@ namespace Aldentea.BaramakiMutus
 		#endregion
 
 
-
+		#region *コンストラクタ(MainWindow)
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -52,7 +53,9 @@ namespace Aldentea.BaramakiMutus
 			this.FileHistoryShortcutParent = menuItemHistory;
 			MyDocument.Initialized += MyDocument_Initialized;
 		}
+		#endregion
 
+		#region *ドキュメント初期化時(MyDocument_Initialized)
 		private void MyDocument_Initialized(object sender, EventArgs e)
 		{
 			this.CurrentGain = 2;
@@ -62,7 +65,7 @@ namespace Aldentea.BaramakiMutus
 
 			MyDocument.UndoCompleted += MyDocument_UndoCompleted;
 		}
-
+		#endregion
 
 		#region *ウィンドウ初期化時(MainWindow_Initialized)
 		private void MainWindow_Initialized(object sender, EventArgs e)
@@ -100,10 +103,32 @@ namespace Aldentea.BaramakiMutus
 		#endregion
 
 
+		#region メニュー
+
+		#region *ファイル - 終了
 		private void menuItemClose_Click(object sender, RoutedEventArgs e)
 		{
 			this.Close();
 		}
+		#endregion
+
+		// (0.0.5)
+		#region *ファイル - エクスポート
+		private void MenuItemExportLog_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new Microsoft.Win32.SaveFileDialog();
+			if (dialog.ShowDialog() == true)
+			{
+				Encoding encoding = Encoding.UTF8;
+				using (var writer = new System.IO.StreamWriter(dialog.FileName, false, Encoding.UTF8))
+				{
+					MyDocument.ExportLog(writer, MySettings.GameLogFormat);
+				}
+			}
+		}
+		#endregion
+
+		#endregion
 
 
 		// このあたりはVM的にまとめたほうがいいのかな？
@@ -584,20 +609,8 @@ namespace Aldentea.BaramakiMutus
 
 		#endregion
 
-		// (0.0.5)
-		private void MenuItemExportLog_Click(object sender, RoutedEventArgs e)
-		{
-			var dialog = new Microsoft.Win32.SaveFileDialog();
-			if (dialog.ShowDialog() == true)
-			{
-				Encoding encoding = Encoding.UTF8;
-				using (var writer = new System.IO.StreamWriter(dialog.FileName, false, Encoding.UTF8))
-				{
-					MyDocument.ExportLog(writer, MySettings.GameLogFormat);
-				}
-			}
-		}
 
+		#region INotifyPropertyChanged実装
 
 		protected void NotifyPropertyChanged(string propertyName)
 		{
@@ -605,5 +618,9 @@ namespace Aldentea.BaramakiMutus
 		}
 		public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
+		#endregion
+
 	}
+	#endregion
+
 }

@@ -16,7 +16,7 @@ namespace Aldentea.BaramakiMutus.Data
 {
 
 	// SweetMutus.Data.SweetMutusGameDocumentをコピペしてみる。
-
+	#region BaramakiMutusDocumentクラス
 	public class BaramakiMutusDocument : Aldentea.Wpf.Document.DocumentWithOperationHistory, IMutusGameDocument
 	{
 
@@ -1077,8 +1077,10 @@ namespace Aldentea.BaramakiMutus.Data
 
 
 	}
+	#endregion
 
 	// (0.0.8)
+	#region GameLogFormat列挙体
 	public enum GameLogFormat
 	{
 		/// <summary>
@@ -1090,6 +1092,6 @@ namespace Aldentea.BaramakiMutus.Data
 		/// </summary>
 		Aldentea
 	}
-
+	#endregion
 
 }

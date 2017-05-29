@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 
 namespace Aldentea.BaramakiMutus
 {
+
+	#region SetCodesDialogクラス
 	/// <summary>
 	/// SetCodesDialog.xaml の相互作用ロジック
 	/// </summary>
@@ -21,16 +23,23 @@ namespace Aldentea.BaramakiMutus
 	{
 		// DataContextとして，Questionsプロパティを設定してください．
 
+		#region *コンストラクタ(SetCodesDialog)
 		public SetCodesDialog()
 		{
 			InitializeComponent();
 		}
+		#endregion
 
+		#region イベントハンドラ
+
+		#region *[閉じる]ボタンクリック時(buttonClose_Click)
 		private void buttonClose_Click(object sender, RoutedEventArgs e)
 		{
 			this.Close();
 		}
+		#endregion
 
+		#region *textBoxCodeでのキー押下時(textBoxCode_KeyDown)
 		private void textBoxCode_KeyDown(object sender, KeyEventArgs e)
 		{
 			switch (e.Key)
@@ -43,7 +52,9 @@ namespace Aldentea.BaramakiMutus
 					break;
 			}
 		}
+		#endregion
 
+		#region *dataGridQuestionsでのキー押下時(dataGridQuestions_KeyDown)
 		private void dataGridQuestions_KeyDown(object sender, KeyEventArgs e)
 		{
 			switch (e.Key)
@@ -55,5 +66,11 @@ namespace Aldentea.BaramakiMutus
 			}
 
 		}
+		#endregion
+
+		#endregion
+
 	}
+	#endregion
+
 }
